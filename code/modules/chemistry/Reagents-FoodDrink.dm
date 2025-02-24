@@ -3647,6 +3647,47 @@ datum
 			transparency = 60
 			bioeffect_id = "accent_tyke"
 
+		fooddrink/temp_bioeffect/fentanyal
+			name = "fentanyal"
+			id= "fentanyal"
+			description = "The catgirl cartels have gone too far this time."
+			fluid_r = 245
+			fluid_g = 169
+			fluid_b = 184
+			transparency = 90
+			bioeffect_id = "accent_uwu"
+			depletion_rate = 0.8
+			reagent_state = LIQUID
+			var/counter = 0
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+				if (!M) M = holder.my_atom
+				if(M.traitHolder?.hasTrait("training_security"))
+
+					if(prob(30))
+						boutput(M, "<b><span class='alert'>You feel like [pick("you made a fucky-wucky","a bastard","this feature is still being tested","a lab rat","you wanna go mrowmrowMROW","you have entirely too much estrogen")]!</span></b>", )
+
+					switch(counter += 1)
+						if (1)
+							M.visible_message("<span class='alert'><b>[M.name]</b> nyas in an obnoxious manner!</span>")
+							playsound(M.loc, 'sound/voice/animal/cat.ogg', 50, 1)
+						if (2)
+							M.emote("drool")
+						if (3)
+							M.change_misstep_chance(5 * mult)
+							M.drowsyness = max(M.drowsyness, 20)
+						if (4 to 9)
+							M.change_eye_blurry(4)
+						if (10)
+							M.emote("faint")
+							M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						if (11 to INFINITY)
+							M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 5 SECONDS * mult))
+
+					M.take_toxin_damage(3 * mult)
+					return
+
 		fooddrink/sawdust
 			name = "sawdust"
 			id = "sawdust"
