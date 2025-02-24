@@ -3654,7 +3654,7 @@ datum
 			fluid_r = 245
 			fluid_g = 169
 			fluid_b = 184
-			transparency = 90
+			transparency = 200
 			bioeffect_id = "accent_uwu"
 			depletion_rate = 0.8
 			reagent_state = LIQUID
@@ -3666,26 +3666,36 @@ datum
 				if(M.traitHolder?.hasTrait("training_security"))
 
 					if(prob(30))
-						boutput(M, "<b><span class='alert'>You feel like [pick("you made a fucky-wucky","a bastard","this feature is still being tested","a lab rat","you wanna go mrowmrowMROW","you have entirely too much estrogen")]!</span></b>", )
+						boutput(M, "<span class='alert'>You feel like [pick("a bastard","the thin blue line just disappeared","your cells are rebelling against you","you wanna go mrowmrowMROW","everything's gone fucky-wucky")]!</span>", )
+					if(prob(10))
+						M.say("STOP [pick("RESISTING", "RUNNING")]!!")
+					if(prob(10))
+						M.say("YOU'RE UNDER ARREST!")
 
 					switch(counter += 1)
 						if (1)
 							M.visible_message("<span class='alert'><b>[M.name]</b> nyas in an obnoxious manner!</span>")
 							playsound(M.loc, 'sound/voice/animal/cat.ogg', 50, 1)
+							boutput(M, "<b><span class='combat bold'>S-Something is tewwibwy wwong, uwu :3</span></b>")
 						if (2)
-							M.emote("drool")
-						if (3)
 							M.change_misstep_chance(5 * mult)
 							M.drowsyness = max(M.drowsyness, 20)
+						if (3)
+							M.emote("drool")
 						if (4 to 9)
-							M.change_eye_blurry(4)
+							M.change_eye_blurry(2)
 						if (10)
 							M.emote("faint")
 							M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
-						if (11 to INFINITY)
+						if (11)
+							M.emote("drool")
+							M.change_misstep_chance(10 * mult)
+						if (12 to 15)
+							M.change_eye_blurry(4)
+						if (16 to INFINITY)
 							M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 5 SECONDS * mult))
 
-					M.take_toxin_damage(3 * mult)
+					M.take_toxin_damage(rand(2,5) * mult)
 					return
 
 		fooddrink/sawdust
