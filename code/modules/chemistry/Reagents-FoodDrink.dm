@@ -3647,7 +3647,7 @@ datum
 			transparency = 60
 			bioeffect_id = "accent_tyke"
 
-		fooddrink/temp_bioeffect/fentanyal
+		fooddrink/temp_bioeffect/fentanyal // god i wish i could put this in reagents-drugs
 			name = "fentanyal"
 			id= "fentanyal"
 			description = "The catgirl cartels have gone too far this time."
@@ -3660,12 +3660,36 @@ datum
 			reagent_state = LIQUID
 			var/counter = 0
 
+			var/static/list/override_image_list = list (
+				new /image('icons/mob/critter.dmi', "cat1"),
+				new /image('icons/mob/critter.dmi', "cat2"),
+				new /image('icons/mob/critter.dmi', "cat3"),
+				new /image('icons/mob/critter.dmi', "cat4"),
+				new /image('icons/mob/critter.dmi', "cat5"),
+				new /image('icons/mob/critter.dmi', "cat6"),
+				new /image('icons/mob/critter.dmi', "cat7"),
+				new /image('icons/mob/critter.dmi', "cat8"),
+				new /image('icons/mob/critter.dmi', "cat9"),
+			)
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
 				if (!M) M = holder.my_atom
-				if(M.traitHolder?.hasTrait("training_security"))
 
-					if(prob(30))
+				// turn people around you into cats.
+				// future project: make them meow and hiss instead of making the default speak sound
+				M.AddComponent(/datum/component/hallucination/random_image_override, timeout=10, image_list=override_image_list, target_list=list(/mob/living/carbon/human), range=8, image_prob=100, image_time=20, override=TRUE)
+				M.jitteriness -= 40
+
+				if(prob(15))
+					M.say("awawa...")
+
+
+
+
+				if(M.traitHolder?.hasTrait("training_security"))
+					M.take_toxin_damage(rand(2,5) * mult)
+					if(prob(25))
 						boutput(M, "<span class='alert'>You feel like [pick("a bastard","the thin blue line just disappeared","your cells are rebelling against you","you wanna go mrowmrowMROW","everything's gone fucky-wucky")]!</span>", )
 					if(prob(10))
 						M.say("STOP [pick("RESISTING", "RUNNING")]!!")
@@ -3694,8 +3718,6 @@ datum
 							M.change_eye_blurry(4)
 						if (16 to INFINITY)
 							M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 5 SECONDS * mult))
-
-					M.take_toxin_damage(rand(2,5) * mult)
 					return
 
 		fooddrink/sawdust

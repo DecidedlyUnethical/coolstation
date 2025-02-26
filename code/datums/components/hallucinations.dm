@@ -326,12 +326,12 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			//pick a non dense turf in view
 			var/list/atom/potentials = list()
 			if(src.visible_creation)
-				for(var/atom/A in oview(parent_mob, src.range))
+				for(var/atom/A in oview(src.range, parent_mob))
 					for(var/type in src.target_list)
 						if(istype(A, type))
 							potentials += A
 			else
-				for(var/atom/A in (orange(parent_mob, src.range) - oview(parent_mob, src.range)))
+				for(var/atom/A in (orange(src.range, parent_mob) - oview(src.range, parent_mob)))
 					for(var/type in src.target_list)
 						if(istype(A, type))
 							potentials += A
