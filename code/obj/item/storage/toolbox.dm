@@ -85,6 +85,15 @@
 		/obj/item/reagent_containers/food/snacks/plant/banana,\
 		/obj/item/reagent_containers/food/drinks/milk)
 
+	roboticist_spawn
+		spawn_contents = list(/obj/item/screwdriver,\
+		/obj/item/wrench,\
+		/obj/item/crowbar,\
+		/obj/item/wirecutters,\
+		/obj/item/staple_gun,\
+		/obj/item/circular_saw,\
+		/obj/item/scalpel)
+
 	yellow_tools
 		spawn_contents = list(/obj/item/screwdriver/yellow,\
 		/obj/item/wrench/yellow,\
